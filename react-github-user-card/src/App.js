@@ -19,17 +19,22 @@ axios
 .get(`https://api.github.com/users/dr3apap`),
   axios.get(`https://api.github.com/users/dr3apap/followers`)
 ])
-.then(axios.spread ((res, res1) => {
-  console.log("The data was:", res);
-  console.log("the data was:", res1);
-  this.setState({
-    github:res.data,
-    github1:res1.data
+.then(axios.spread((res, res1)=>{
+  res1.data.map(follower =>{
+    axios.get(follower.url)
+    .then(res1 =>{
+      this.setState({
+        github:res.data,
+        github1:[...this.state.github1, res1.data]
+      }); // this.setState stopped here
+    },(error) =>{
+      console.log(error)
+    }); //second.then call for the follower stopped here
+  }); //Map stopped here
 
-  });
-},err =>{
-  console.log("The data was not returned", err);
-}));
+}),(error)=>{
+  console.log(error)
+}); // axios spread stopped here
 
 
 }

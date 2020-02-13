@@ -10,9 +10,9 @@ class SearchForm extends React.Component {
   }
   render() {
     return(
-    <form>
+    <form className="Search">
      <input type="text" name="user" placeholder="Username"/>
-     <button type="button">Submit</button>
+     <button classname="Search-btn" type="button">Submit</button>
    </form>
 );
   }
