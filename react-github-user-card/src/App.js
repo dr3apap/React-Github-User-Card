@@ -2,15 +2,32 @@ import React from "react";
 import "./App.css";
 import axios from "axios";
 import GitHubCards from "./component/GitHubCards";
+import SearchForm from "./component/SearchForm";
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      github: [],
-      github1:[]
+      github: {},
+      github1:[],
+      user:""
     };
   }
+
+
+changeHandler(login){
+const newUser = {
+github:{},
+github1:[],
+user:login
+}
+this.setState({
+  github:newUser,
+  github1:[...this.state.github1, newUser]
+});
+
+}
+
 
 
 componentDidMount(){
@@ -34,10 +51,10 @@ axios
 
 }),(error)=>{
   console.log(error)
-}); // axios spread stopped here
+}); //.then first call for the two data's  and axios spread stopped here
 
 
-}
+}// componentDidMount closing bracket
 
 
 
@@ -45,6 +62,7 @@ axios
    return(
 
       <div className="App">
+        <SearchForm changeHandler={this.changeHandler}/>
         <GitHubCards github1={this.state.github1} github={this.state.github}/>
       </div>
     );
